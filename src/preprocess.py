@@ -52,6 +52,7 @@ if __name__ == '__main__':
     parser.add_argument("-lower", type=str2bool, nargs='?',const=True,default=True)
 
     parser.add_argument('-log_file', default='../../logs/cnndm.log')
+    parser.add_argument('-log_level', default=20, type=int)
 
     parser.add_argument('-dataset', default='', help='train, valid or test, defaul will process all datasets')
 
@@ -59,5 +60,5 @@ if __name__ == '__main__':
 
 
     args = parser.parse_args()
-    init_logger(args.log_file)
+    init_logger(args.log_file, args.log_level)
     eval('data_builder.'+args.mode + '(args)')
