@@ -11,7 +11,7 @@ from os.path import join as pjoin
 
 import torch
 from multiprocess import Pool
-from pytorch_pretrained_bert import BertTokenizer
+from transformers import BertTokenizer
 
 from others.logging import logger
 from others.utils import clean
@@ -144,7 +144,7 @@ def hashhex(s):
 class BertData():
     def __init__(self, args):
         self.args = args
-        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
+        self.tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-cased')
         self.sep_vid = self.tokenizer.vocab['[SEP]']
         self.cls_vid = self.tokenizer.vocab['[CLS]']
         self.pad_vid = self.tokenizer.vocab['[PAD]']

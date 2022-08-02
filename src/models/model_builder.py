@@ -1,7 +1,7 @@
 
 import torch
 import torch.nn as nn
-from pytorch_pretrained_bert import BertModel, BertConfig
+from transformers import BertModel, BertConfig
 from torch.nn.init import xavier_uniform_
 
 from models.encoder import TransformerInterEncoder, Classifier, RNNEncoder
@@ -44,13 +44,12 @@ class Bert(nn.Module):
     def __init__(self, temp_dir, load_pretrained_bert, bert_config):
         super(Bert, self).__init__()
         if(load_pretrained_bert):
-            self.model = BertModel.from_pretrained('bert-base-uncased', cache_dir=temp_dir)
+            self.model = BertModel.from_pretrained('bert-base-multilingual-cased', cache_dir=temp_dir)
         else:
             self.model = BertModel(bert_config)
 
     def forward(self, x, segs, mask):
-        encoded_layers, _ = self.model(x, segs, attention_mask =mask)
-        top_vec = encoded_layers[-1]
+        top_vec = self.model(input_ids=x, token_type_ids=segs, attention_mask=mask)[0]
         return top_vec
 
 
