@@ -253,7 +253,7 @@ def _format_to_bert(params):
 
     bert = BertData(args)
 
-    logger.info('Processing %s' % json_file)
+    logger.debug('Processing %s' % json_file)
     jobs = json.load(open(json_file))
     datasets = []
     for d in jobs:
@@ -269,7 +269,7 @@ def _format_to_bert(params):
         b_data_dict = {"src": indexed_tokens, "labels": labels, "segs": segments_ids, 'clss': cls_ids,
                        'src_txt': src_txt, "tgt_txt": tgt_txt}
         datasets.append(b_data_dict)
-    logger.info('Saving to %s' % save_file)
+    logger.debug('Saving to %s' % save_file)
     torch.save(datasets, save_file)
     datasets = []
     gc.collect()
